@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true" scan="true" scanPeriod="10 seconds">
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%X{applicationName} %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<appender name="DOC"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${catalina.base}/logs/s5.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.base}/logs/s5.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<totalSizeCap>500MB</totalSizeCap>
+			<maxHistory>60</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%X{applicationName} %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} %line - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<logger name="com.s5" additivity="false" level="INFO">
+		<appender-ref ref="DOC" />
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<logger name="org.hibernate" level="INFO" />
+	<root level="INFO">
+		<appender-ref ref="DOC" />
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
